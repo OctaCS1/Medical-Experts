@@ -1,0 +1,11 @@
+<tr>
+  <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 md:pl-0"><%= record.localitate_spital %></td>
+  <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 md:pl-0"><%= record.spital %></td>
+  <td class="whitespace-nowrap py-4 px-3 text-sm text-gray-500"><%= record.patient.cnp %></td>
+  <td class="whitespace-nowrap py-4 px-3 text-sm text-gray-500"><%= record.diagnostic_la_internare %></td>
+  <td class="flex justify-end whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 md:pr-0">
+    <%= link_to 'Vizualizare detaliata', record, class:'text-red-600 hover:text-red-900 pr-1 pl-1' %> |
+    <%= link_to 'Modifica', edit_record_path(record), class:'text-red-600 hover:text-red-900 pr-1 pl-1' %> |
+    <%= button_to "Sterge", record, method: :delete, class: 'text-red-600 hover:text-red-900 pl-1', form: { data: { turbo_confirm: "Sigur doresti sa stergi fisa pacientului/ei #{record.patient.lastname}?" } } %>
+  </td>
+</tr>

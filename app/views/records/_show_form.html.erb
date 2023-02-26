@@ -1,0 +1,511 @@
+<%= form_with(model: record, class: "space-y-6") do |form| %>
+  <% if record.errors.any? %>
+    <div class="rounded-md bg-red-50 p-4">
+      <div class="flex">
+        <div class="flex-shrink-0">
+          <svg class="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd" />
+          </svg>
+        </div>
+        <div class="ml-3">
+          <h3 class="text-sm font-medium text-red-800"><%= record.errors.count > 1 ? "Au aparut #{record.errors.count} erori in trimiterea formularului: " : "A aparut o eroare in trimiterea formularului: "%></h3>
+          <div class="mt-2 text-sm text-red-700">
+            <ul role="list" class="list-disc space-y-1 pl-5">
+              <% record.errors.each do |error| %>
+                <li><%= error.full_message %></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  <%= form.hidden_field :patient_id, value: record.patient.id %>
+  <%= form.hidden_field :user_id, value: current_user.id %>
+  <fieldset disabled>
+    <div class="bg-white px-4 py-5 sm:rounded-lg sm:p-6 shadow">
+    <div class="bg-white px-4 py-5 sm:rounded-lg sm:p-6">
+      <div class="md:grid md:grid-cols-3 md:gap-6">
+        <div class="md:col-span-1">
+          <h3 class="text-lg font-medium leading-6 text-gray-900">Date pacient</h3>
+        </div>
+        <div class="mt-5 space-y-6 md:col-span-2 md:mt-0">
+          <div class="grid grid-cols-6 gap-6">
+            <div class="col-span-6 sm:col-span-3">
+              <label for="company-website" class="block text-sm font-medium text-gray-700">Nume*</label>
+              <div class="mt-1 flex rounded-md shadow-sm">
+                <%= form.text_field :nume, value: record.patient.lastname, class:'block w-full flex-1 rounded-none rounded-l-md rounded-r-md border-gray-300 focus:border-red-500 focus:ring-red-500 sm:text-sm'%>
+              </div>
+            </div>
+            <div class="col-span-6 sm:col-span-3">
+              <label for="company-website" class="block text-sm font-medium text-gray-700">Prenume*</label>
+              <div class="mt-1 flex rounded-md shadow-sm">
+                <%= form.text_field :prenume, value: record.patient.firstname, class:'block w-full flex-1 rounded-none rounded-l-md rounded-r-md border-gray-300 focus:border-red-500 focus:ring-red-500 sm:text-sm'%>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-6 gap-6">
+            <div class="col-span-6 sm:col-span-3">
+              <label for="cnp" class="block text-sm font-medium text-gray-700">Cod numeric personal*</label>
+              <%= form.text_field :cnp, value: record.patient.cnp, class:'block w-full rounded-none rounded border-gray-300 focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+            </div>
+            <div class="col-span-6 sm:col-span-3">
+              <label for="serie_buletin" class="block text-sm font-medium text-gray-700">Serie si numar card identitate*</label>
+              <%= form.text_field :serie_nr_buletin, value: record.patient.serie_nr_buletin, class:'rounded-none rounded border-gray-300 focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+            </div>
+          </div>
+
+          <div class="inline-flex">
+            <div class="mr-5">
+              <label for="data_nasterii" class="block text-sm font-medium text-gray-700">Data nasterii*</label>
+              <% puts record.patient.data_nasterii %>
+              <%= form.date_field :data_nasterii, value: record.patient.data_nasterii.strftime("%Y-%m-%d"), class:'rounded-none rounded border-gray-300 focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+            </div>
+            <div>
+              <label for="varsta" class="block text-sm font-medium text-gray-700">Varsta*</label>
+              <%= form.number_field :varsta, value: record.patient.varsta, class:'rounded-none rounded border-gray-300 focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+            </div>
+          </div>
+
+          <div>
+            <label for="sex" class="block text-sm font-medium text-gray-700">Sex*</label>
+            <%= form.radio_button :sex, "M", checked: record.patient.sex == "M" ? true : false, class:'rounded-none rounded border-gray-300 focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+            <%= form.label :masculin, "Masculin", class:'text-sm font-medium text-gray-700 mr-2' %>
+            <%= form.radio_button :sex, "F", checked: record.patient.sex == "M" ? false : true, class:'rounded-none rounded border-gray-300 focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+            <%= form.label :feminin, "Feminin", class:'text-sm font-medium text-gray-700' %>
+          </div>
+
+          <div class="grid grid-cols-6 gap-6">
+            <div class="col-span-6 sm:col-span-3">
+              <label for="ocupatie" class="block text-sm font-medium text-gray-700">Ocupatie*</label>
+              <div class="mt-1 flex rounded-md shadow-sm">
+                <%= form.text_field :ocupatie, value: record.patient.ocupatie, class:'block w-full flex-1 rounded-none rounded-l-md rounded-r-md border-gray-300 focus:border-red-500 focus:ring-red-500 sm:text-sm'%>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-6 gap-6">
+            <div class="col-span-6 sm:col-span-3">
+              <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+              <div class="mt-1 flex rounded-md shadow-sm">
+                <%= form.text_field :email, value: record.patient.email, class:'block w-full flex-1 rounded-none rounded-l-md rounded-r-md border-gray-300 focus:border-red-500 focus:ring-red-500 sm:text-sm'%>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white px-4 py-5 sm:rounded-lg sm:p-6">
+      <div class="md:grid md:grid-cols-3 md:gap-6">
+        <div class="md:col-span-1">
+        </div>
+        <div class="mt-5 md:col-span-2 md:mt-0">
+          <div class="grid grid-cols-6 gap-6">
+            <div class="col-span-6 sm:col-span-3">
+              <label for="greutate" class="block text-sm font-medium text-gray-700">Greutate*</label>
+              <%= form.number_field :greutate, value: record.patient.greutate, class:'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+            </div>
+
+            <div class="col-span-6 sm:col-span-3">
+              <label for="inaltime" class="block text-sm font-medium text-gray-700">Inaltime (m)*</label>
+              <%= form.number_field :inaltime, value: record.patient.inaltime, class:'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+            </div>
+
+            <div class="col-span-6 sm:col-span-3">
+              <label for="grup_sangvin" class="block text-sm font-medium text-gray-700">Grupa sangvina</label>
+              <%= form.radio_button :grup_sangvin, "0", checked: record.patient.grup_sangvin == "0" ? true : false, class:'rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+              <%= form.label :grupa_0, "0", class:'text-sm font-medium text-gray-700 mr-2' %>
+              <%= form.radio_button :grup_sangvin, "A", checked: record.patient.grup_sangvin == "A" ? true : false, class:'rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+              <%= form.label :grupa_a, "A", class:'text-sm font-medium text-gray-700' %>
+              <%= form.radio_button :grup_sangvin, "B", checked: record.patient.grup_sangvin == "B" ? true : false, class:'rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+              <%= form.label :grupa_b, "B", class:'text-sm font-medium text-gray-700 mr-2' %>
+              <%= form.radio_button :grup_sangvin, "AB", checked: record.patient.grup_sangvin == "AB" ? true : false, class:'rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+              <%= form.label :grupa_a, "AB", class:'text-sm font-medium text-gray-700' %>
+            </div>
+
+            <div class="col-span-6 sm:col-span-3">
+              <label for="rh" class="block text-sm font-medium text-gray-700">RH</label>
+              <%= form.radio_button :rh, true, checked: record.patient.rh, class:'rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+              <%= form.label :pozitiv, "Pozitiv", class:'text-sm font-medium text-gray-700 mr-2' %>
+              <%= form.radio_button :rh, false, checked: !record.patient.rh, class:'rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+              <%= form.label :negativ, "Negativ", class:'text-sm font-medium text-gray-700' %>
+            </div>
+
+            <div class="col-span-6 sm:col-span-6">
+              <label for="alergii" class="block text-sm font-medium text-gray-700">Alergii</label>
+              <%= form.text_area :alergii, value: record.patient.alergii, class:'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white px-4 py-5 sm:rounded-lg sm:p-6">
+      <div class="md:grid md:grid-cols-3 md:gap-6">
+        <div class="md:col-span-1">
+        </div>
+        <div class="mt-5 md:col-span-2 md:mt-0">
+          <div class="grid grid-cols-6 gap-6">
+            <div class="col-span-6 sm:col-span-3">
+                <label for="localitate" class="block text-sm font-medium text-gray-700">Localitate*</label>
+                <%= form.text_field :localitate, value: record.patient.localitate, class:'rounded-none w-full rounded border-gray-300 focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+            </div>
+            <div class="col-span-6 sm:col-span-3">
+                <label for="judet" class="block text-sm font-medium text-gray-700">Judet*</label>
+                <%= form.text_field :judet, value: record.patient.judet, class:'rounded-none w-full rounded border-gray-300 focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+            </div>
+
+            <div class="col-span-6 sm:col-span-6">
+              <label for="adresa" class="block text-sm font-medium text-gray-700">Adresa*</label>
+              <%= form.text_area :adresa, value: record.patient.adresa, class:'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+
+    <div class="bg-white px-4 py-5 shadow sm:rounded-lg sm:p-6">
+      <div class="md:grid md:grid-cols-3 md:gap-6">
+        <div class="md:col-span-1">
+          <h3 class="text-lg font-medium leading-6 text-gray-900">Detalii spitalicesti</h3>
+        </div>
+        <div class="mt-5 md:col-span-2 md:mt-0">
+          <div class="grid grid-cols-6 gap-6">
+            <div class="col-span-6 sm:col-span-3">
+              <label for="judet_spital" class="block text-sm font-medium text-gray-700">Judet spital*</label>
+              <select name="record[judet_spital]" id="record_judet_spital" class="mt-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                <option value="">Judet</option>
+                <option value="Alba" <%if record.judet_spital&.include?("Alba") %> selected <%end%>>Alba</option>
+                <option value="Argeș" <%if record.judet_spital&.include?("Argeș") %> selected <%end%>>Argeș</option>
+                <option value="Arad" <%if record.judet_spital&.include?("Arad") %> selected <%end%>>Arad</option>
+                <option value="București" <%if record.judet_spital&.include?("București") %> selected <%end%>>București</option>
+                <option value="Bacău" <%if record.judet_spital&.include?("Bacău") %> selected <%end%>>Bacău</option>
+                <option value="Bihor" <%if record.judet_spital&.include?("Bihor") %> selected <%end%>>Bihor</option>
+                <option value="Bistrița Năsăud" <%if record.judet_spital&.include?("Bistrița Năsăud") %> selected <%end%>>Bistrița Năsăud</option>
+                <option value="Brăila" <%if record.judet_spital&.include?("Brăila") %> selected <%end%>>Brăila</option>
+                <option value="Botoșani" <%if record.judet_spital&.include?("Botoșani") %> selected <%end%>>Botoșani</option>
+                <option value="Brașov" <%if record.judet_spital&.include?("Brașov") %> selected <%end%>>Brașov</option>
+                <option value="Buzău" <%if record.judet_spital&.include?("Buzău") %> selected <%end%>>Buzău</option>
+                <option value="Cluj" <%if record.judet_spital&.include?("Cluj") %> selected <%end%>>Cluj</option>
+                <option value="Călărași" <%if record.judet_spital&.include?("Călărași") %> selected <%end%>>Călărași</option>
+                <option value="Caraș-Severin" <%if record.judet_spital&.include?("Caraș-Severin") %> selected <%end%>>Caraș-Severin</option>
+                <option value="Constanța" <%if record.judet_spital&.include?("Constanța") %> selected <%end%>>Constanța</option>
+                <option value="Covasna" <%if record.judet_spital&.include?("Covasna") %> selected <%end%>>Covasna</option>
+                <option value="Dâmbovița" <%if record.judet_spital&.include?("Dâmbovița") %> selected <%end%>>Dâmbovița</option>
+                <option value="Dolj" <%if record.judet_spital&.include?("Dolj") %> selected <%end%>>Dolj</option>
+                <option value="Gorj" <%if record.judet_spital&.include?("Gorj") %> selected <%end%>>Gorj</option>
+                <option value="Galați" <%if record.judet_spital&.include?("Galați") %> selected <%end%>>Galați</option>
+                <option value="Giurgiu" <%if record.judet_spital&.include?("Giurgiu") %> selected <%end%>>Giurgiu</option>
+                <option value="Hunedoara" <%if record.judet_spital&.include?("Hunedoara") %> selected <%end%>>Hunedoara</option>
+                <option value="Harghita" <%if record.judet_spital&.include?("Harghita") %> selected <%end%>>Harghita</option>
+                <option value="Ilfov" <%if record.judet_spital&.include?("Ilfov") %> selected <%end%>>Ilfov</option>
+                <option value="Ialomița" <%if record.judet_spital&.include?("Ialomița") %> selected <%end%>>Ialomița</option>
+                <option value="Iași" <%if record.judet_spital&.include?("Iași") %> selected <%end%>>Iași</option>
+                <option value="Mehedinți" <%if record.judet_spital&.include?("Mehedinți") %> selected <%end%>>Mehedinți</option>
+                <option value="Maramureș" <%if record.judet_spital&.include?("Maramureș") %> selected <%end%>>Maramureș</option>
+                <option value="Mureș" <%if record.judet_spital&.include?("Mureș") %> selected <%end%>>Mureș</option>
+                <option value="Neamț" <%if record.judet_spital&.include?("Neamț") %> selected <%end%>>Neamț</option>
+                <option value="Olt" <%if record.judet_spital&.include?("Olt") %> selected <%end%>>Olt</option>
+                <option value="Prahova" <%if record.judet_spital&.include?("Prahova") %> selected <%end%>>Prahova</option>
+                <option value="Sibiu" <%if record.judet_spital&.include?("Sibiu") %> selected <%end%>>Sibiu</option>
+                <option value="Sălaj" <%if record.judet_spital&.include?("Sălaj") %> selected <%end%>>Sălaj</option>
+                <option value="Satu-Mare" <%if record.judet_spital&.include?("Satu-Mare") %> selected <%end%>>Satu-Mare</option>
+                <option value="Suceava" <%if record.judet_spital&.include?("Suceava") %> selected <%end%>>Suceava</option>
+                <option value="Tulcea" <%if record.judet_spital&.include?("Tulcea") %> selected <%end%>>Tulcea</option>
+                <option value="Timiș" <%if record.judet_spital&.include?("Timiș") %> selected <%end%>>Timiș</option>
+                <option value="Teleorman" <%if record.judet_spital&.include?("Teleorman") %> selected <%end%>>Teleorman</option>
+                <option value="Vâlcea" <%if record.judet_spital&.include?("Vâlcea") %> selected <%end%>>Vâlcea</option>
+                <option value="Vrancea" <%if record.judet_spital&.include?("Vrancea") %> selected <%end%>>Vrancea</option>
+                <option value="Vaslui" <%if record.judet_spital&.include?("Vaslui") %> selected <%end%>>Vaslui</option></select>
+            </div>
+
+            <div class="col-span-6 sm:col-span-3">
+              <label for="localitate_spital" class="block text-sm font-medium text-gray-700">Localitate spital*</label>
+              <%= form.text_field :localitate_spital, class:'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+            </div>
+
+            <div class="col-span-6 sm:col-span-3">
+              <label for="spital" class="block text-sm font-medium text-gray-700">Spital*</label>
+              <%= form.text_field :spital, class:'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+            </div>
+
+            <div class="col-span-6 sm:col-span-3">
+              <label for="sectia" class="block text-sm font-medium text-gray-700">Sectia*</label>
+              <%= form.text_field :sectia, class:'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+            </div>
+
+            <div class="col-span-6 sm:col-span-3">
+              <label for="internat_urgenta" class="block text-sm font-medium text-gray-700">Internat de urgenta*</label>
+              <%= form.radio_button :internat_urgenta, true, class:'rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+              <%= form.label :da, "DA", class:'text-sm font-medium text-gray-700 mr-2' %>
+              <%= form.radio_button :internat_urgenta, false, class:'rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+              <%= form.label :nu, "NU", class:'text-sm font-medium text-gray-700' %>
+            </div>
+
+              <div class="col-span-6 sm:col-span-3">
+                <label for="intocmit" class="block text-sm font-medium text-gray-700">Intocmit de</label>
+                <%= form.text_field :intocmit, value: current_user.parafa, class:'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+              </div>
+
+            <div class="inline-flex col-span-6 sm:col-span-3">
+              <div class="mr-5">
+                <label for="data_internarii" class="block text-sm font-medium text-gray-700">Data internarii*</label>
+                <%= form.date_field :data_internarii, max: Date.today, class:'rounded-none rounded border-gray-300 focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+              </div>
+              <div>
+                <label for="ora_internarii" class="block text-sm font-medium text-gray-700">Ora internarii*</label>
+                <%= form.time_field :ora_internarii, max: (Time.now - 1.hour),class:'rounded-none rounded border-gray-300 focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+              </div>
+            </div>
+
+            <div class="inline-flex col-span-6 sm:col-span-3">
+              <div class="mr-5">
+                <label for="numar_zile_spitalizare" class="block text-sm font-medium text-gray-700">Zile spitalizare*</label>
+                <%= form.number_field :numar_zile_spitalizare, in: 0..365, step: 1, class:'rounded-none rounded border-gray-300 focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+              </div>
+              <div>
+                <label for="numar_zile_concediu" class="block text-sm font-medium text-gray-700">Zile concediu medical*</label>
+                <%= form.number_field :numar_zile_concediu, in: 0..365, step: 1, class:'rounded-none rounded border-gray-300 focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+              </div>
+            </div>
+
+            <div class="inline-flex col-span-6 sm:col-span-3">
+              <div class="mr-5">
+                <label for="data_externarii" class="block text-sm font-medium text-gray-700">Data externarii*</label>
+                <%= form.date_field :data_externarii, max: Date.today, class:'rounded-none rounded border-gray-300 focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+              </div>
+              <div>
+                <label for="ora_externarii" class="block text-sm font-medium text-gray-700">Ora externarii*</label>
+                <%= form.time_field :ora_externarii, max: Time.now, class:'rounded-none rounded border-gray-300 focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+              </div>
+            </div>
+
+            <div class="col-span-6 sm:col-span-3">
+              <label for="numar_talon_pensie" class="block text-sm font-medium text-gray-700">Talon de pensii numarul</label>
+              <%= form.text_field :numar_talon_pensie, class:'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+            </div>
+
+            <div class="col-span-6 sm:col-span-6">
+              <label for="diagnostic_de_trimitere" class="block text-sm font-medium text-gray-700">Diagnostic de trimitere*</label>
+              <%= form.text_area :diagnostic_de_trimitere, class:'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+            </div>
+
+            <div class="col-span-6 sm:col-span-6">
+              <label for="diagnostic_la_internare" class="block text-sm font-medium text-gray-700">Diagnostic de internare*</label>
+              <%= form.text_area :diagnostic_la_internare, class:'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+            </div>
+
+            <div class="col-span-6 sm:col-span-6">
+              <label for="diagnostic_la_72_ore" class="block text-sm font-medium text-gray-700">Diagnostic la 72 de ore*</label>
+              <%= form.text_area :diagnostic_la_72_ore, class:'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white px-4 py-5 shadow sm:rounded-lg sm:p-6">
+      <div class="md:grid md:grid-cols-3 md:gap-6">
+        <div class="md:col-span-1">
+          <h3 class="text-lg font-medium leading-6 text-gray-900">Diagnostic la externare</h3>
+        </div>
+        <div class="mt-5 md:col-span-2 md:mt-0">
+          <div class="grid grid-cols-6 gap-6">
+            <div class="col-span-6 sm:col-span-6">
+              <label for="diagnostic_externare_principal" class="block text-sm font-medium text-gray-700">Diagnostic principal*</label>
+              <%= form.text_area :diagnostic_externare_principal, class:'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+            </div>
+
+            <div class="col-span-6 sm:col-span-6">
+              <label for="diagnostic_externare_boli" class="block text-sm font-medium text-gray-700">Diagnostic boli concomitente*</label>
+              <%= form.text_area :diagnostic_externare_boli, class:'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white px-4 py-5 shadow sm:rounded-lg sm:p-6">
+      <div class="md:grid md:grid-cols-3 md:gap-6">
+        <div class="md:col-span-1">
+          <h3 class="text-lg font-medium leading-6 text-gray-900">Interventia chirurgicala</h3>
+        </div>
+        <div class="mt-5 md:col-span-2 md:mt-0">
+          <div class="grid grid-cols-6 gap-6">
+            <div class="col-span-6 sm:col-span-6">
+              <label for="interventie_tehnica" class="block text-sm font-medium text-gray-700">Tehnica operatorie*</label>
+              <%= form.text_area :interventie_tehnica, class:'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+            </div>
+
+            <div class="col-span-6 sm:col-span-6">
+              <label for="interventie_boala" class="block text-sm font-medium text-gray-700">Boala pentru care s-a efectuat*</label>
+              <%= form.text_area :interventie_boala, class:'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+            </div>
+
+            <div class="col-span-3 sm:col-span-3">
+              <label for="interventie_data" class="block text-sm font-medium text-gray-700">Data interventiei*</label>
+              <%= form.date_field :interventie_data, max: Date.today, class:'rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white px-4 py-5 shadow sm:rounded-lg sm:p-6">
+      <div class="md:grid md:grid-cols-3 md:gap-6">
+        <div class="md:col-span-1">
+          <h3 class="text-lg font-medium leading-6 text-gray-900">Starea la externare</h3>
+        </div>
+        <div class="mt-5 md:col-span-2 md:mt-0">
+          <div class="grid grid-cols-6 gap-6">
+            <div class="col-span-6 sm:col-span-6">
+              <label for="internat_urgenta" class="block text-sm font-medium text-gray-700">Stare*</label>
+              <%= form.radio_button :stare_la_externare, "vindecat", class:'rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+              <%= form.label :vindecat, "Vindecat", class:'text-sm font-medium text-gray-700 mr-2' %>
+              <%= form.radio_button :stare_la_externare, "ameliorat", class:'rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+              <%= form.label :ameliorat, "Ameliorat", class:'text-sm font-medium text-gray-700' %>
+              <%= form.radio_button :stare_la_externare, "stationar", class:'rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+              <%= form.label :stationar, "Stationar", class:'text-sm font-medium text-gray-700 mr-2' %>
+              <%= form.radio_button :stare_la_externare, "agravat", class:'rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+              <%= form.label :agravat, "Agravat", class:'text-sm font-medium text-gray-700' %>
+              <%= form.radio_button :stare_la_externare, "transferat", class:'rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+              <%= form.label :transferat, "Transferat", class:'text-sm font-medium text-gray-700 mr-2' %>
+              <%= form.radio_button :stare_la_externare, "decedat", class:'rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+              <%= form.label :decedat, "Decedat", class:'text-sm font-medium text-gray-700 mr-2' %>
+            </div>
+
+            <div class="col-span-6 sm:col-span-6">
+              <label for="decedat" class="block text-sm font-medium text-gray-700">Diagnostic de deces</label>
+              <%= form.text_area :decedat, class:'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white px-4 py-5 shadow sm:rounded-lg sm:p-6">
+      <div class="md:grid md:grid-cols-3 md:gap-6">
+        <div class="md:col-span-1">
+          <h3 class="text-lg font-medium leading-6 text-gray-900">Diagnostic anatomo-patologic</h3>
+        </div>
+        <div class="mt-5 md:col-span-2 md:mt-0">
+          <div class="grid grid-cols-6 gap-6">
+            <div class="col-span-6 sm:col-span-6">
+              <label for="diagnostic_anatomo_patologic" class="block text-sm font-medium text-gray-700">Descriere*</label>
+              <%= form.text_area :diagnostic_anatomo_patologic, class:'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white px-4 py-5 shadow sm:rounded-lg sm:p-6">
+      <div class="md:grid md:grid-cols-3 md:gap-6">
+        <div class="md:col-span-1">
+          <h3 class="text-lg font-medium leading-6 text-gray-900">Observatie clinica</h3>
+        </div>
+        <div class="mt-5 md:col-span-2 md:mt-0">
+          <div class="grid grid-cols-6 gap-6">
+            <div class="col-span-6 sm:col-span-3">
+              <fieldset disabled>
+                <label for="doctor" class="block text-sm font-medium text-gray-700">Doctor</label>
+                <%= form.text_field :doctor, value: "#{current_user.nume} #{current_user.prenume}",class:'rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+              </fieldset>
+            </div>
+            <div class="col-span-6 sm:col-span-3">
+              <label for="observatie_data" class="block text-sm font-medium text-gray-700">Data*</label>
+              <%= form.date_field :observatie_data, class:'rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+            </div>
+            <div class="col-span-6 sm:col-span-6">
+              <label for="observatie_clinica" class="block text-sm font-medium text-gray-700">Descriere*</label>
+              <%= form.text_area :observatie_clinica, class:'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white px-4 py-5 shadow sm:rounded-lg sm:p-6">
+      <div class="md:grid md:grid-cols-3 md:gap-6">
+        <div class="md:col-span-1">
+          <h3 class="text-lg font-medium leading-6 text-gray-900">Examinari de specialitate</h3>
+        </div>
+        <div class="mt-5 md:col-span-2 md:mt-0">
+          <div class="grid grid-cols-6 gap-6">
+            <div class="col-span-6 sm:col-span-6">
+              <label for="examinari_de_specialitate" class="block text-sm font-medium text-gray-700">Descriere*</label>
+              <%= form.text_area :examinari_de_specialitate, class:'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white px-4 py-5 shadow sm:rounded-lg sm:p-6">
+      <div class="md:grid md:grid-cols-3 md:gap-6">
+        <div class="md:col-span-1">
+          <h3 class="text-lg font-medium leading-6 text-gray-900">Examene cerute</h3>
+        </div>
+        <div class="mt-5 md:col-span-2 md:mt-0">
+          <div class="grid grid-cols-6 gap-6">
+            <div class="col-span-6 sm:col-span-6">
+              <label for="examene_cerute" class="block text-sm font-medium text-gray-700">Descriere*</label>
+              <%= form.text_area :examene_cerute, class:'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white px-4 py-5 shadow sm:rounded-lg sm:p-6">
+      <div class="md:grid md:grid-cols-3 md:gap-6">
+        <div class="md:col-span-1">
+          <h3 class="text-lg font-medium leading-6 text-gray-900">Examen oncologic</h3>
+        </div>
+        <div class="mt-5 md:col-span-2 md:mt-0">
+          <div class="grid grid-cols-6 gap-6">
+            <div class="col-span-6 sm:col-span-6">
+              <label for="examen_oncologic_cavitate_bucala" class="block text-sm font-medium text-gray-700">Cavitate bucala - cavum</label>
+              <%= form.text_field :examen_oncologic_cavitate_bucala, class:'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+            </div>
+            <div class="col-span-6 sm:col-span-6">
+              <label for="examen_oncologic_tegumente" class="block text-sm font-medium text-gray-700">Tegumente</label>
+              <%= form.text_field :examen_oncologic_tegumente, class:'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+            </div>
+            <div class="col-span-6 sm:col-span-6">
+              <label for="examen_oncologic_ganglionare" class="block text-sm font-medium text-gray-700">Grupe ganglionare palpabile</label>
+              <%= form.text_field :examen_oncologic_ganglionare, class:'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+            </div>
+            <div class="col-span-6 sm:col-span-6">
+              <label for="examen_oncologic_san" class="block text-sm font-medium text-gray-700">San</label>
+              <%= form.text_field :examen_oncologic_san, class:'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+            </div>
+            <div class="col-span-6 sm:col-span-6">
+              <label for="examen_oncologic_genital_feminin" class="block text-sm font-medium text-gray-700">Organe genitale feminine</label>
+              <%= form.text_field :examen_oncologic_genital_feminin, class:'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+            </div>
+            <div class="col-span-6 sm:col-span-6">
+              <label for="examen_oncologic_citologie_secretie" class="block text-sm font-medium text-gray-700">Citologia secreţiei vaginale</label>
+              <%= form.text_field :examen_oncologic_citologie_secretie, class:'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+            </div>
+            <div class="col-span-6 sm:col-span-6">
+              <label for="examen_oncologic_prostata_rect" class="block text-sm font-medium text-gray-700">Prostată şi rect</label>
+              <%= form.text_field :examen_oncologic_prostata_rect, class:'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+            </div>
+            <div class="col-span-6 sm:col-span-6">
+              <label for="examen_oncologic_alte" class="block text-sm font-medium text-gray-700">Alte</label>
+              <%= form.text_field :examen_oncologic_alte, class:'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </fieldset>
+  <div class="flex justify-end">
+    <%= link_to 'Inapoi la fisele medicale ale pacientilor', records_path, class: "rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2" %>
+  </div>
+<% end %>
+

@@ -1,0 +1,47 @@
+<div class="flex flex-col justify-center sm:px-6 lg:px-8">
+  <div class="sm:mx-auto sm:w-full sm:max-w-md">
+    <h2 class="mt-6 text-3xl font-bold tracking-tight text-center text-gray-900">Intra in contul tau</h2>
+    <p class="mt-2 text-sm text-center text-gray-600">
+      Sau
+      <%= link_to 'inregistreaza-te chiar acum!', new_user_registration_path, class:'font-medium text-red-600 hover:text-red-500' %>
+    </p>
+  </div>
+
+  <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+    <div class="px-4 py-8 space-y-6 bg-white shadow sm:rounded-lg sm:px-10">
+      <%= form_for(resource, class: 'space-y-6', as: resource_name, url: session_path(resource_name)) do |f| %>
+        <%= render "devise/shared/error_messages", resource: resource %>
+        <div class="mb-3">
+          <label for="email" class="block text-sm font-medium text-gray-700">Email address</label>
+          <div class="mt-1">
+            <%= f.email_field :email, autofocus: true, autocomplete: "email", class:'block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-red-500 focus:outline-none focus:ring-red-500 sm:text-sm' %>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+          <div class="mt-1">
+            <%= f.password_field :password, autocomplete: "current-password", class: 'block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-red-500 focus:outline-none focus:ring-red-500 sm:text-sm' %>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between mb-3">
+          <div class="flex items-center">
+            <%= f.check_box :remember_me, class:'h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-500 hover:cursor-pointer'%>
+            <label onclick="check();" for="user[remember-me]" class="ml-2 text-sm text-gray-900 select-none hover:cursor-pointer">Remember me</label>
+          </div>
+        </div>
+
+        <div>
+          <%= f.submit "Log in",class:'flex w-full justify-center rounded-md border border-transparent bg-red-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+<script>
+  function check() 
+  {
+    document.getElementById('user_remember_me').checked=!document.getElementById('user_remember_me').checked;
+  }
+</script>

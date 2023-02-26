@@ -1,0 +1,149 @@
+<%= form_with(model: patient, class: "space-y-6") do |form| %>
+  <fieldset disabled>
+    <div class="bg-white px-4 py-5 shadow sm:rounded-lg sm:p-6">
+      <div class="md:grid md:grid-cols-3 md:gap-6">
+        <div class="md:col-span-1">
+          <h3 class="text-lg font-medium leading-6 text-gray-900">Date personale</h3>
+        </div>
+        <div class="mt-5 space-y-6 md:col-span-2 md:mt-0">
+          <div class="grid grid-cols-6 gap-6">
+            <div class="col-span-6 sm:col-span-3">
+              <label for="company-website" class="block text-sm font-medium text-gray-700">Nume*</label>
+              <div class="mt-1 flex rounded-md shadow-sm">
+                <%= form.text_field :lastname, placeholder: 'Popescu..', class:'block w-full flex-1 rounded-none rounded-l-md rounded-r-md border-gray-300 focus:border-red-500 focus:ring-red-500 sm:text-sm'%>
+              </div>
+            </div>
+            <div class="col-span-6 sm:col-span-3">
+              <label for="company-website" class="block text-sm font-medium text-gray-700">Prenume*</label>
+              <div class="mt-1 flex rounded-md shadow-sm">
+                <%= form.text_field :firstname, placeholder: 'Marian..', class:'block w-full flex-1 rounded-none rounded-l-md rounded-r-md border-gray-300 focus:border-red-500 focus:ring-red-500 sm:text-sm'%>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-6 gap-6">
+            <div class="col-span-6 sm:col-span-3">
+              <label for="cnp" class="block text-sm font-medium text-gray-700">Cod numeric personal*</label>
+              <%= form.text_field :cnp, class:'block w-full rounded-none rounded border-gray-300 focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+            </div>
+            <div class="col-span-6 sm:col-span-3">
+              <label for="serie_buletin" class="block text-sm font-medium text-gray-700">Serie si numar card identitate*</label>
+              <%= form.text_field :serie_nr_buletin, class:'rounded-none rounded border-gray-300 focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+            </div>
+          </div>
+
+          <div class="inline-flex">
+            <div class="mr-5">
+              <label for="data_nasterii" class="block text-sm font-medium text-gray-700">Data nasterii*</label>
+              <%= form.date_field :data_nasterii, max: Date.today, class:'rounded-none rounded border-gray-300 focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+            </div>
+            <div>
+              <label for="varsta" class="block text-sm font-medium text-gray-700">Varsta*</label>
+              <%= form.number_field :varsta, in: 0..130, step: 1, class:'rounded-none rounded border-gray-300 focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+            </div>
+          </div>
+
+          <div>
+            <label for="sex" class="block text-sm font-medium text-gray-700">Sex*</label>
+            <%= form.radio_button :sex, "M", class:'rounded-none rounded border-gray-300 focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+            <%= form.label :masculin, "Masculin", class:'text-sm font-medium text-gray-700 mr-2' %>
+            <%= form.radio_button :sex, "F", class:'rounded-none rounded border-gray-300 focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+            <%= form.label :feminin, "Feminin", class:'text-sm font-medium text-gray-700' %>
+          </div>
+
+          <div class="grid grid-cols-6 gap-6">
+            <div class="col-span-6 sm:col-span-3">
+              <label for="ocupatie" class="block text-sm font-medium text-gray-700">Ocupatie*</label>
+              <div class="mt-1 flex rounded-md shadow-sm">
+                <%= form.text_field :ocupatie, placeholder: 'Salariat..', class:'block w-full flex-1 rounded-none rounded-l-md rounded-r-md border-gray-300 focus:border-red-500 focus:ring-red-500 sm:text-sm'%>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-6 gap-6">
+            <div class="col-span-6 sm:col-span-3">
+              <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+              <div class="mt-1 flex rounded-md shadow-sm">
+                <%= form.text_field :email, placeholder: 'popescu.marian@email.com', class:'block w-full flex-1 rounded-none rounded-l-md rounded-r-md border-gray-300 focus:border-red-500 focus:ring-red-500 sm:text-sm'%>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white px-4 py-5 shadow sm:rounded-lg sm:p-6">
+      <div class="md:grid md:grid-cols-3 md:gap-6">
+        <div class="md:col-span-1">
+          <h3 class="text-lg font-medium leading-6 text-gray-900">Date medicale</h3>
+        </div>
+        <div class="mt-5 md:col-span-2 md:mt-0">
+          <div class="grid grid-cols-6 gap-6">
+            <div class="col-span-6 sm:col-span-3">
+              <label for="greutate" class="block text-sm font-medium text-gray-700">Greutate*</label>
+              <%= form.number_field :greutate, in: 1.0..200.0, step: 0.1, class:'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+            </div>
+
+            <div class="col-span-6 sm:col-span-3">
+              <label for="inaltime" class="block text-sm font-medium text-gray-700">Inaltime (m)*</label>
+              <%= form.number_field :inaltime, in: 0.4..3.0, step: 0.01, class:'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+            </div>
+
+            <div class="col-span-6 sm:col-span-3">
+              <label for="grup_sangvin" class="block text-sm font-medium text-gray-700">Grupa sangvina</label>
+              <%= form.radio_button :grup_sangvin, "0", class:'rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+              <%= form.label :grupa_0, "0", class:'text-sm font-medium text-gray-700 mr-2' %>
+              <%= form.radio_button :grup_sangvin, "A", class:'rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+              <%= form.label :grupa_a, "A", class:'text-sm font-medium text-gray-700' %>
+              <%= form.radio_button :grup_sangvin, "B", class:'rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+              <%= form.label :grupa_b, "B", class:'text-sm font-medium text-gray-700 mr-2' %>
+              <%= form.radio_button :grup_sangvin, "AB", class:'rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+              <%= form.label :grupa_a, "AB", class:'text-sm font-medium text-gray-700' %>
+            </div>
+
+            <div class="col-span-6 sm:col-span-3">
+              <label for="rh" class="block text-sm font-medium text-gray-700">RH</label>
+              <%= form.radio_button :rh, true, class:'rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+              <%= form.label :pozitiv, "Pozitiv", class:'text-sm font-medium text-gray-700 mr-2' %>
+              <%= form.radio_button :rh, false, class:'rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+              <%= form.label :negativ, "Negativ", class:'text-sm font-medium text-gray-700' %>
+            </div>
+
+            <div class="col-span-6 sm:col-span-6">
+              <label for="alergii" class="block text-sm font-medium text-gray-700">Alergii</label>
+              <%= form.text_area :alergii, class:'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white px-4 py-5 shadow sm:rounded-lg sm:p-6">
+      <div class="md:grid md:grid-cols-3 md:gap-6">
+        <div class="md:col-span-1">
+          <h3 class="text-lg font-medium leading-6 text-gray-900">Domiciliu</h3>
+        </div>
+        <div class="mt-5 md:col-span-2 md:mt-0">
+          <div class="grid grid-cols-6 gap-6">
+            <div class="col-span-6 sm:col-span-3">
+                <label for="localitate" class="block text-sm font-medium text-gray-700">Localitate*</label>
+                <%= form.text_field :localitate, class:'rounded-none w-full rounded border-gray-300 focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+            </div>
+            <div class="col-span-6 sm:col-span-3">
+                <label for="judet" class="block text-sm font-medium text-gray-700">Judet*</label>
+                <%= form.text_field :judet, class:'rounded-none w-full rounded border-gray-300 focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+            </div>
+
+            <div class="col-span-6 sm:col-span-6">
+              <label for="adresa" class="block text-sm font-medium text-gray-700">Adresa*</label>
+              <%= form.text_area :adresa, class:'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </fieldset>
+  <div class="flex justify-end">
+  </div>
+<% end %>
+

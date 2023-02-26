@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  patient: one
+  judet_spital: MyString
+  localitate_spital: MyString
+  spital: MyString
+  sectia: MyString
+
+two:
+  patient: two
+  judet_spital: MyString
+  localitate_spital: MyString
+  spital: MyString
+  sectia: MyString
