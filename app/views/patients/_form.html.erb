@@ -1,16 +1,16 @@
 <%= form_with(model: patient, class: "space-y-6") do |form| %>
   <% if patient.errors.any? %>
-    <div class="rounded-md bg-red-50 p-4">
+    <div class="p-4 rounded-md bg-red-50">
       <div class="flex">
         <div class="flex-shrink-0">
-          <svg class="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+          <svg class="w-5 h-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd" />
           </svg>
         </div>
         <div class="ml-3">
           <h3 class="text-sm font-medium text-red-800"><%= patient.errors.count > 1 ? "Au aparut #{patient.errors.count} erori in trimiterea formularului: " : "A aparut o eroare in trimiterea formularului: "%></h3>
           <div class="mt-2 text-sm text-red-700">
-            <ul role="list" class="list-disc space-y-1 pl-5">
+            <ul role="list" class="pl-5 space-y-1 list-disc">
               <% patient.errors.each do |error| %>
                 <li><%= error.full_message %></li>
               <% end %>
@@ -20,7 +20,8 @@
       </div>
     </div>
   <% end %>
-  <div class="bg-white px-4 py-5 shadow sm:rounded-lg sm:p-6">
+  <%= form.hidden_field :user_id, value: current_user.id%>
+  <div class="px-4 py-5 bg-white shadow sm:rounded-lg sm:p-6">
     <div class="md:grid md:grid-cols-3 md:gap-6">
       <div class="md:col-span-1">
         <h3 class="text-lg font-medium leading-6 text-gray-900">Date personale</h3>
@@ -29,13 +30,13 @@
         <div class="grid grid-cols-6 gap-6">
           <div class="col-span-6 sm:col-span-3">
             <label for="company-website" class="block text-sm font-medium text-gray-700">Nume*</label>
-            <div class="mt-1 flex rounded-md shadow-sm">
+            <div class="flex mt-1 rounded-md shadow-sm">
               <%= form.text_field :lastname, placeholder: 'Popescu..', class:'block w-full flex-1 rounded-none rounded-l-md rounded-r-md border-gray-300 focus:border-red-500 focus:ring-red-500 sm:text-sm'%>
             </div>
           </div>
           <div class="col-span-6 sm:col-span-3">
             <label for="company-website" class="block text-sm font-medium text-gray-700">Prenume*</label>
-            <div class="mt-1 flex rounded-md shadow-sm">
+            <div class="flex mt-1 rounded-md shadow-sm">
               <%= form.text_field :firstname, placeholder: 'Marian..', class:'block w-full flex-1 rounded-none rounded-l-md rounded-r-md border-gray-300 focus:border-red-500 focus:ring-red-500 sm:text-sm'%>
             </div>
           </div>
@@ -65,7 +66,7 @@
 
           <div class="mt-5">
             <label for="sex" class="block text-sm font-medium text-gray-700">Sex*</label>
-            <select name="patient[sex]" id="sex" class="rounded-none rounded border-gray-300 focus:border-red-500 focus:ring-red-500 sm:text-sm">
+            <select name="patient[sex]" id="sex" class="border-gray-300 rounded-none rounded focus:border-red-500 focus:ring-red-500 sm:text-sm">
               <option value=""></option>
               <option value="M" <% if patient&.sex == "M" %>selected<% end %>>Masculin</option>
               <option value="F" <% if patient&.sex == "F" %>selected<% end %>>Feminin</option>
@@ -75,7 +76,7 @@
         <div class="grid grid-cols-6 gap-6">
           <div class="col-span-6 sm:col-span-3">
             <label for="ocupatie" class="block text-sm font-medium text-gray-700">Ocupatie*</label>
-            <div class="mt-1 flex rounded-md shadow-sm">
+            <div class="flex mt-1 rounded-md shadow-sm">
               <%= form.text_field :ocupatie, placeholder: 'Salariat..', class:'block w-full flex-1 rounded-none rounded-l-md rounded-r-md border-gray-300 focus:border-red-500 focus:ring-red-500 sm:text-sm'%>
             </div>
           </div>
@@ -84,7 +85,7 @@
         <div class="grid grid-cols-6 gap-6">
           <div class="col-span-6 sm:col-span-3">
             <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-            <div class="mt-1 flex rounded-md shadow-sm">
+            <div class="flex mt-1 rounded-md shadow-sm">
               <%= form.text_field :email, placeholder: 'popescu.marian@email.com', class:'block w-full flex-1 rounded-none rounded-l-md rounded-r-md border-gray-300 focus:border-red-500 focus:ring-red-500 sm:text-sm'%>
             </div>
           </div>
@@ -93,7 +94,7 @@
     </div>
   </div>
 
-  <div class="bg-white px-4 py-5 shadow sm:rounded-lg sm:p-6">
+  <div class="px-4 py-5 bg-white shadow sm:rounded-lg sm:p-6">
     <div class="md:grid md:grid-cols-3 md:gap-6">
       <div class="md:col-span-1">
         <h3 class="text-lg font-medium leading-6 text-gray-900">Date medicale</h3>
@@ -139,7 +140,7 @@
     </div>
   </div>
 
-  <div class="bg-white px-4 py-5 shadow sm:rounded-lg sm:p-6">
+  <div class="px-4 py-5 bg-white shadow sm:rounded-lg sm:p-6">
     <div class="md:grid md:grid-cols-3 md:gap-6">
       <div class="md:col-span-1">
         <h3 class="text-lg font-medium leading-6 text-gray-900">Domiciliu</h3>
@@ -152,7 +153,50 @@
           </div>
           <div class="col-span-6 sm:col-span-3">
               <label for="judet" class="block text-sm font-medium text-gray-700">Judet*</label>
-              <%= form.text_field :judet, class:'rounded-none w-full rounded border-gray-300 focus:border-red-500 focus:ring-red-500 sm:text-sm' %>
+              <select name="patient[judet]" id="patient_judet_spital" class="block w-full py-2 pl-3 pr-10 mt-1 text-base border-gray-300 rounded-md focus:border-red-500 focus:outline-none focus:ring-red-500 sm:text-sm">
+              <option value="" disabled selected> </option>
+              <option value="Alba" <%if patient.judet&.include?("Alba") %> selected <%end%>>Alba</option>
+              <option value="Argeș" <%if patient.judet&.include?("Argeș") %> selected <%end%>>Argeș</option>
+              <option value="Arad" <%if patient.judet&.include?("Arad") %> selected <%end%>>Arad</option>
+              <option value="București" <%if patient.judet&.include?("București") %> selected <%end%>>București</option>
+              <option value="Bacău" <%if patient.judet&.include?("Bacău") %> selected <%end%>>Bacău</option>
+              <option value="Bihor" <%if patient.judet&.include?("Bihor") %> selected <%end%>>Bihor</option>
+              <option value="Bistrița Năsăud" <%if patient.judet&.include?("Bistrița Năsăud") %> selected <%end%>>Bistrița Năsăud</option>
+              <option value="Brăila" <%if patient.judet&.include?("Brăila") %> selected <%end%>>Brăila</option>
+              <option value="Botoșani" <%if patient.judet&.include?("Botoșani") %> selected <%end%>>Botoșani</option>
+              <option value="Brașov" <%if patient.judet&.include?("Brașov") %> selected <%end%>>Brașov</option>
+              <option value="Buzău" <%if patient.judet&.include?("Buzău") %> selected <%end%>>Buzău</option>
+              <option value="Cluj" <%if patient.judet&.include?("Cluj") %> selected <%end%>>Cluj</option>
+              <option value="Călărași" <%if patient.judet&.include?("Călărași") %> selected <%end%>>Călărași</option>
+              <option value="Caraș-Severin" <%if patient.judet&.include?("Caraș-Severin") %> selected <%end%>>Caraș-Severin</option>
+              <option value="Constanța" <%if patient.judet&.include?("Constanța") %> selected <%end%>>Constanța</option>
+              <option value="Covasna" <%if patient.judet&.include?("Covasna") %> selected <%end%>>Covasna</option>
+              <option value="Dâmbovița" <%if patient.judet&.include?("Dâmbovița") %> selected <%end%>>Dâmbovița</option>
+              <option value="Dolj" <%if patient.judet&.include?("Dolj") %> selected <%end%>>Dolj</option>
+              <option value="Gorj" <%if patient.judet&.include?("Gorj") %> selected <%end%>>Gorj</option>
+              <option value="Galați" <%if patient.judet&.include?("Galați") %> selected <%end%>>Galați</option>
+              <option value="Giurgiu" <%if patient.judet&.include?("Giurgiu") %> selected <%end%>>Giurgiu</option>
+              <option value="Hunedoara" <%if patient.judet&.include?("Hunedoara") %> selected <%end%>>Hunedoara</option>
+              <option value="Harghita" <%if patient.judet&.include?("Harghita") %> selected <%end%>>Harghita</option>
+              <option value="Ilfov" <%if patient.judet&.include?("Ilfov") %> selected <%end%>>Ilfov</option>
+              <option value="Ialomița" <%if patient.judet&.include?("Ialomița") %> selected <%end%>>Ialomița</option>
+              <option value="Iași" <%if patient.judet&.include?("Iași") %> selected <%end%>>Iași</option>
+              <option value="Mehedinți" <%if patient.judet&.include?("Mehedinți") %> selected <%end%>>Mehedinți</option>
+              <option value="Maramureș" <%if patient.judet&.include?("Maramureș") %> selected <%end%>>Maramureș</option>
+              <option value="Mureș" <%if patient.judet&.include?("Mureș") %> selected <%end%>>Mureș</option>
+              <option value="Neamț" <%if patient.judet&.include?("Neamț") %> selected <%end%>>Neamț</option>
+              <option value="Olt" <%if patient.judet&.include?("Olt") %> selected <%end%>>Olt</option>
+              <option value="Prahova" <%if patient.judet&.include?("Prahova") %> selected <%end%>>Prahova</option>
+              <option value="Sibiu" <%if patient.judet&.include?("Sibiu") %> selected <%end%>>Sibiu</option>
+              <option value="Sălaj" <%if patient.judet&.include?("Sălaj") %> selected <%end%>>Sălaj</option>
+              <option value="Satu-Mare" <%if patient.judet&.include?("Satu-Mare") %> selected <%end%>>Satu-Mare</option>
+              <option value="Suceava" <%if patient.judet&.include?("Suceava") %> selected <%end%>>Suceava</option>
+              <option value="Tulcea" <%if patient.judet&.include?("Tulcea") %> selected <%end%>>Tulcea</option>
+              <option value="Timiș" <%if patient.judet&.include?("Timiș") %> selected <%end%>>Timiș</option>
+              <option value="Teleorman" <%if patient.judet&.include?("Teleorman") %> selected <%end%>>Teleorman</option>
+              <option value="Vâlcea" <%if patient.judet&.include?("Vâlcea") %> selected <%end%>>Vâlcea</option>
+              <option value="Vrancea" <%if patient.judet&.include?("Vrancea") %> selected <%end%>>Vrancea</option>
+              <option value="Vaslui" <%if patient.judet&.include?("Vaslui") %> selected <%end%>>Vaslui</option></select>
           </div>
 
           <div class="col-span-6 sm:col-span-6">

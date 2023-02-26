@@ -1,4 +1,5 @@
 class Patient < ApplicationRecord
+  belongs_to :user
   has_many :records, dependent: :destroy
 
   validates :lastname, presence: true

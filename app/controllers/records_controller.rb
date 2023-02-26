@@ -4,6 +4,14 @@ class RecordsController < ApplicationController
   # GET /records or /records.json
   def index
     @records = Record.all.order(created_at: :desc)
+    if params[:search].present?
+      patients = Patient.where("lower(firstname) LIKE ? OR lower(lastname) LIKE ? OR cnp LIKE ?", "%#{params[:search].downcase}%", "%#{params[:search].downcase}%", "%#{params[:search].downcase}%").ids
+      @records = @records.where(patient_id:patients)
+    end
+    respond_to do |format|
+      format.js
+      format.html
+    end
   end
 
   # GET /records/1 or /records/1.json

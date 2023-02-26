@@ -3,6 +3,13 @@ class PatientsController < ApplicationController
 
   def index
     @patients = Patient.all.order(created_at: :desc)
+    if params[:search].present?
+      @patients = @patients.where("lower(firstname) LIKE ? OR lower(lastname) LIKE ? OR cnp LIKE ?", "%#{params[:search].downcase}%", "%#{params[:search].downcase}%", "%#{params[:search].downcase}%")
+    end
+    respond_to do |format|
+      format.js
+      format.html
+    end
   end
 
   def show
@@ -56,7 +63,7 @@ class PatientsController < ApplicationController
         :lastname, :firstname, :data_nasterii, :varsta,
         :sex, :cnp, :serie_nr_buletin, :greutate,
         :inaltime, :ocupatie, :localitate, :judet,
-        :adresa, :email, :grup_sangvin, :rh, :alergii
+        :adresa, :email, :grup_sangvin, :rh, :alergii, :user_id
       )
     end
 end

@@ -1,16 +1,16 @@
 <%= form_with(model: record, class: "space-y-6") do |form| %>
   <% if record.errors.any? %>
-    <div class="rounded-md bg-red-50 p-4">
+    <div class="p-4 rounded-md bg-red-50">
       <div class="flex">
         <div class="flex-shrink-0">
-          <svg class="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+          <svg class="w-5 h-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd" />
           </svg>
         </div>
         <div class="ml-3">
           <h3 class="text-sm font-medium text-red-800"><%= record.errors.count > 1 ? "Au aparut #{record.errors.count} erori in trimiterea formularului: " : "A aparut o eroare in trimiterea formularului: "%></h3>
           <div class="mt-2 text-sm text-red-700">
-            <ul role="list" class="list-disc space-y-1 pl-5">
+            <ul role="list" class="pl-5 space-y-1 list-disc">
               <% record.errors.each do |error| %>
                 <li><%= error.full_message %></li>
               <% end %>
@@ -23,8 +23,8 @@
   <%= form.hidden_field :patient_id, value: @patient.id %>
   <%= form.hidden_field :user_id, value: current_user.id %>
   <fieldset disabled>
-  <div class="bg-white px-4 py-5 sm:rounded-lg sm:p-6 shadow">
-  <div class="bg-white px-4 py-5 sm:rounded-lg sm:p-6">
+  <div class="px-4 py-5 bg-white shadow sm:rounded-lg sm:p-6">
+  <div class="px-4 py-5 bg-white sm:rounded-lg sm:p-6">
     <div class="md:grid md:grid-cols-3 md:gap-6">
       <div class="md:col-span-1">
         <h3 class="text-lg font-medium leading-6 text-gray-900">Date pacient</h3>
@@ -33,13 +33,13 @@
         <div class="grid grid-cols-6 gap-6">
           <div class="col-span-6 sm:col-span-3">
             <label for="company-website" class="block text-sm font-medium text-gray-700">Nume*</label>
-            <div class="mt-1 flex rounded-md shadow-sm">
+            <div class="flex mt-1 rounded-md shadow-sm">
               <%= form.text_field :nume, value: @patient.lastname, class:'block w-full flex-1 rounded-none rounded-l-md rounded-r-md border-gray-300 focus:border-red-500 focus:ring-red-500 sm:text-sm'%>
             </div>
           </div>
           <div class="col-span-6 sm:col-span-3">
             <label for="company-website" class="block text-sm font-medium text-gray-700">Prenume*</label>
-            <div class="mt-1 flex rounded-md shadow-sm">
+            <div class="flex mt-1 rounded-md shadow-sm">
               <%= form.text_field :prenume, value: @patient.firstname, class:'block w-full flex-1 rounded-none rounded-l-md rounded-r-md border-gray-300 focus:border-red-500 focus:ring-red-500 sm:text-sm'%>
             </div>
           </div>
@@ -78,7 +78,7 @@
         <div class="grid grid-cols-6 gap-6">
           <div class="col-span-6 sm:col-span-3">
             <label for="ocupatie" class="block text-sm font-medium text-gray-700">Ocupatie*</label>
-            <div class="mt-1 flex rounded-md shadow-sm">
+            <div class="flex mt-1 rounded-md shadow-sm">
               <%= form.text_field :ocupatie, value: @patient.ocupatie, class:'block w-full flex-1 rounded-none rounded-l-md rounded-r-md border-gray-300 focus:border-red-500 focus:ring-red-500 sm:text-sm'%>
             </div>
           </div>
@@ -87,7 +87,7 @@
         <div class="grid grid-cols-6 gap-6">
           <div class="col-span-6 sm:col-span-3">
             <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-            <div class="mt-1 flex rounded-md shadow-sm">
+            <div class="flex mt-1 rounded-md shadow-sm">
               <%= form.text_field :email, value: @patient.email, class:'block w-full flex-1 rounded-none rounded-l-md rounded-r-md border-gray-300 focus:border-red-500 focus:ring-red-500 sm:text-sm'%>
             </div>
           </div>
@@ -96,7 +96,7 @@
     </div>
   </div>
 
-  <div class="bg-white px-4 py-5 sm:rounded-lg sm:p-6">
+  <div class="px-4 py-5 bg-white sm:rounded-lg sm:p-6">
     <div class="md:grid md:grid-cols-3 md:gap-6">
       <div class="md:col-span-1">
       </div>
@@ -141,7 +141,7 @@
     </div>
   </div>
 
-  <div class="bg-white px-4 py-5 sm:rounded-lg sm:p-6">
+  <div class="px-4 py-5 bg-white sm:rounded-lg sm:p-6">
     <div class="md:grid md:grid-cols-3 md:gap-6">
       <div class="md:col-span-1">
       </div>
@@ -167,7 +167,7 @@
   </div>
   </fieldset>
 
-  <div class="bg-white px-4 py-5 shadow sm:rounded-lg sm:p-6">
+  <div class="px-4 py-5 bg-white shadow sm:rounded-lg sm:p-6">
     <div class="md:grid md:grid-cols-3 md:gap-6">
       <div class="md:col-span-1">
         <h3 class="text-lg font-medium leading-6 text-gray-900">Detalii spitalicesti</h3>
@@ -176,8 +176,8 @@
         <div class="grid grid-cols-6 gap-6">
           <div class="col-span-6 sm:col-span-3">
             <label for="judet_spital" class="block text-sm font-medium text-gray-700">Judet spital*</label>
-            <select name="record[judet_spital]" id="record_judet_spital" class="mt-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
-              <option value="">Judet</option>
+            <select name="record[judet_spital]" id="record_judet_spital" class="block w-full py-2 pl-3 pr-10 mt-1 text-base border-gray-300 rounded-md focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+              <option value="" disabled selected>Judet</option>
               <option value="Alba" <%if record.judet_spital&.include?("Alba") %> selected <%end%>>Alba</option>
               <option value="Argeș" <%if record.judet_spital&.include?("Argeș") %> selected <%end%>>Argeș</option>
               <option value="Arad" <%if record.judet_spital&.include?("Arad") %> selected <%end%>>Arad</option>
@@ -309,7 +309,7 @@
     </div>
   </div>
 
-  <div class="bg-white px-4 py-5 shadow sm:rounded-lg sm:p-6">
+  <div class="px-4 py-5 bg-white shadow sm:rounded-lg sm:p-6">
     <div class="md:grid md:grid-cols-3 md:gap-6">
       <div class="md:col-span-1">
         <h3 class="text-lg font-medium leading-6 text-gray-900">Diagnostic la externare</h3>
@@ -330,7 +330,7 @@
     </div>
   </div>
 
-  <div class="bg-white px-4 py-5 shadow sm:rounded-lg sm:p-6">
+  <div class="px-4 py-5 bg-white shadow sm:rounded-lg sm:p-6">
     <div class="md:grid md:grid-cols-3 md:gap-6">
       <div class="md:col-span-1">
         <h3 class="text-lg font-medium leading-6 text-gray-900">Interventia chirurgicala</h3>
@@ -344,7 +344,7 @@
 
           <div class="col-span-6 sm:col-span-6">
             <label for="interventie_boala" class="block text-sm font-medium text-gray-700">Boala pentru care s-a efectuat*</label>
-            <select name="record[interventie_boala]" id="record_interventie_boala" class="mt-1 block w-full rounded-md border-gray-300 focus:border-red-500 focus:ring-red-500 sm:text-sm">
+            <select name="record[interventie_boala]" id="record_interventie_boala" class="block w-full mt-1 border-gray-300 rounded-md focus:border-red-500 focus:ring-red-500 sm:text-sm">
               <option value=""></option>
               <option value="Apendicita" <% if record&.interventie_boala == "Apendicita" %>selected<% end %>>Apendicita</option>
               <option value="Ocluzie Intestinala" <% if record&.interventie_boala == "Ocluzie Intestinala" %>selected<% end %>>Ocluzie Intestinala</option>
@@ -360,7 +360,7 @@
     </div>
   </div>
 
-  <div class="bg-white px-4 py-5 shadow sm:rounded-lg sm:p-6">
+  <div class="px-4 py-5 bg-white shadow sm:rounded-lg sm:p-6">
     <div class="md:grid md:grid-cols-3 md:gap-6">
       <div class="md:col-span-1">
         <h3 class="text-lg font-medium leading-6 text-gray-900">Starea la externare</h3>
@@ -392,7 +392,7 @@
     </div>
   </div>
 
-  <div class="bg-white px-4 py-5 shadow sm:rounded-lg sm:p-6">
+  <div class="px-4 py-5 bg-white shadow sm:rounded-lg sm:p-6">
     <div class="md:grid md:grid-cols-3 md:gap-6">
       <div class="md:col-span-1">
         <h3 class="text-lg font-medium leading-6 text-gray-900">Diagnostic anatomo-patologic</h3>
@@ -408,7 +408,7 @@
     </div>
   </div>
 
-  <div class="bg-white px-4 py-5 shadow sm:rounded-lg sm:p-6">
+  <div class="px-4 py-5 bg-white shadow sm:rounded-lg sm:p-6">
     <div class="md:grid md:grid-cols-3 md:gap-6">
       <div class="md:col-span-1">
         <h3 class="text-lg font-medium leading-6 text-gray-900">Observatie clinica</h3>
@@ -435,7 +435,7 @@
     </div>
   </div>
 
-  <div class="bg-white px-4 py-5 shadow sm:rounded-lg sm:p-6">
+  <div class="px-4 py-5 bg-white shadow sm:rounded-lg sm:p-6">
     <div class="md:grid md:grid-cols-3 md:gap-6">
       <div class="md:col-span-1">
         <h3 class="text-lg font-medium leading-6 text-gray-900">Examinari de specialitate</h3>
@@ -451,7 +451,7 @@
     </div>
   </div>
 
-  <div class="bg-white px-4 py-5 shadow sm:rounded-lg sm:p-6">
+  <div class="px-4 py-5 bg-white shadow sm:rounded-lg sm:p-6">
     <div class="md:grid md:grid-cols-3 md:gap-6">
       <div class="md:col-span-1">
         <h3 class="text-lg font-medium leading-6 text-gray-900">Examene cerute</h3>
@@ -467,7 +467,7 @@
     </div>
   </div>
 
-  <div class="bg-white px-4 py-5 shadow sm:rounded-lg sm:p-6">
+  <div class="px-4 py-5 bg-white shadow sm:rounded-lg sm:p-6">
     <div class="md:grid md:grid-cols-3 md:gap-6">
       <div class="md:col-span-1">
         <h3 class="text-lg font-medium leading-6 text-gray-900">Examen oncologic</h3>
