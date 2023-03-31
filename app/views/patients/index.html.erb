@@ -20,11 +20,15 @@
         <div class="mt-4 flex flex-col">
           <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-              <div class="relative rounded-md border border-gray-300 px-3 py-2 shadow-sm focus-within:border-red-600 focus-within:ring-1 focus-within:ring-red-600">
-                <label for="name" class="absolute -top-2 left-2 -mt-px inline-block text-center bg-white px-1 text-xs font-medium text-gray-900">Cauta</label>
-                <input onkeypress='search(event, this);' type="text" name="name" id="search" class="block w-full border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm" placeholder="Marian Popescu " autofocus>
+              <div class="pb-4">
+                <%= render 'shared/notice_messages' %>
               </div>
-              <%= render 'shared/notice_messages' %>
+              <div class="center pb-2">
+                <div class="relative rounded-md border border-gray-300 px-3 py-2 shadow-sm focus-within:border-red-600 focus-within:ring-1 focus-within:ring-red-600">
+                  <label for="name" class="absolute -top-2 left-2 -mt-px inline-block text-center bg-white px-1 text-xs font-medium text-gray-900">Cauta</label>
+                  <input onkeypress='search(event, this);' type="text" name="name" id="search" class="block w-full border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm" placeholder="Marian Popescu " autofocus>
+                </div>
+              </div>
               <table id="patients" class="min-w-full divide-y divide-gray-300">
                 <thead>
                   <tr>
@@ -42,6 +46,9 @@
                   <%= render @patients %>
                 </tbody>
               </table>
+                <div class="flex justify-center pt-8">
+                  <%== pagy_nav(@pagy) %>
+                </div>
             </div>
           </div>
         </div>

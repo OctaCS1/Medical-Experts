@@ -3,11 +3,13 @@ class RecordsController < ApplicationController
 
   # GET /records or /records.json
   def index
-    @records = Record.all.order(created_at: :desc)
+    records = Record.all.order(created_at: :desc)
     if params[:search].present?
       patients = Patient.where("lower(firstname) LIKE ? OR lower(lastname) LIKE ? OR cnp LIKE ?", "%#{params[:search].downcase}%", "%#{params[:search].downcase}%", "%#{params[:search].downcase}%").ids
-      @records = @records.where(patient_id:patients)
+      records_ids = Record.where("lower(localitate_spital) LIKE ? OR lower(spital) LIKE ? OR lower(diagnostic_la_internare) LIKE ?", "%#{params[:search].downcase}%", "%#{params[:search].downcase}%", "%#{params[:search].downcase}%").ids
+      records = records.where(patient_id: patients).or(Record.where(id: records_ids))
     end
+    @pagy , @records = pagy(records)
     respond_to do |format|
       format.js
       format.html

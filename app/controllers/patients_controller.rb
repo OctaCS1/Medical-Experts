@@ -2,10 +2,11 @@ class PatientsController < ApplicationController
   before_action :set_patient, only: %i[ show edit update destroy ]
 
   def index
-    @patients = Patient.all.order(created_at: :desc)
+    patients = Patient.all.order(created_at: :desc)
     if params[:search].present?
-      @patients = @patients.where("lower(firstname) LIKE ? OR lower(lastname) LIKE ? OR cnp LIKE ?", "%#{params[:search].downcase}%", "%#{params[:search].downcase}%", "%#{params[:search].downcase}%")
+      patients = patients.where("lower(firstname) LIKE ? OR lower(lastname) LIKE ? OR cnp LIKE ?", "%#{params[:search].downcase}%", "%#{params[:search].downcase}%", "%#{params[:search].downcase}%")
     end
+    @pagy, @patients = pagy(patients)
     respond_to do |format|
       format.js
       format.html
