@@ -77,3 +77,4 @@ group :test do
 end
 
 gem "matrix", "~> 0.4.2"
+gem 'pagy', '~> 6.0', '>= 6.0.2'
