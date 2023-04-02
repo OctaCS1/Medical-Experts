@@ -97,3 +97,27 @@
   color: white;
   background: rgb(204, 4, 4);
 }
+.slide-over-active {
+  overflow: hidden;
+}
+
+#slide-over {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 9999;
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+
+#slide-over.slide-over-active {
+  opacity: 1;
+  visibility: visible;
+}
+body::-webkit-scrollbar{
+  display: none;
+}

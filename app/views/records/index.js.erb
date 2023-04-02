@@ -16,3 +16,22 @@ document.getElementById("records").innerHTML = `
     </tbody>
 </table>
 `
+document.getElementById("patients").innerHTML = `
+<table id="patients" class="min-w-full divide-y divide-gray-300">
+    <thead>
+        <tr>
+        <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 md:pl-0">Nume</th>
+        <th scope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-gray-900">Prenume</th>
+        <th scope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-gray-900">CNP</th>
+        <th scope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-gray-900">Varsta</th>
+        <th scope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-gray-900">Apartine de</th>
+        <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6 md:pr-0">
+            <span class="sr-only">Modifica</span>
+        </th>
+        </tr>
+    </thead>
+    <tbody class="divide-y divide-gray-200">
+        <%= j render @patients %>
+    </tbody>
+</table>
+`;

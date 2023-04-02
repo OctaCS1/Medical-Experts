@@ -4,17 +4,23 @@ class RecordsController < ApplicationController
   # GET /records or /records.json
   def index
     records = Record.all.order(created_at: :desc)
+    patients = Patient.all.order(created_at: :desc)
     if params[:search].present?
-      patients = Patient.where("lower(firstname) LIKE ? OR lower(lastname) LIKE ? OR cnp LIKE ?", "%#{params[:search].downcase}%", "%#{params[:search].downcase}%", "%#{params[:search].downcase}%").ids
-      records_ids = Record.where("lower(localitate_spital) LIKE ? OR lower(spital) LIKE ? OR lower(diagnostic_la_internare) LIKE ?", "%#{params[:search].downcase}%", "%#{params[:search].downcase}%", "%#{params[:search].downcase}%").ids
-      records = records.where(patient_id: patients).or(Record.where(id: records_ids))
+      search_term = "%#{params[:search].downcase}%"
+      patient_ids = patients.where("lower(firstname) LIKE ? OR lower(lastname) LIKE ? OR cnp LIKE ?", search_term, search_term, search_term).pluck(:id)
+      record_ids = records.where("lower(localitate_spital) LIKE ? OR lower(spital) LIKE ? OR lower(diagnostic_la_internare) LIKE ?", search_term, search_term, search_term).pluck(:id)
+      records = records.where(patient_id: patient_ids).or(Record.where(id: record_ids))
+      patients = patients.where(id: patient_ids)
     end
-    @pagy , @records = pagy(records)
+    @pagy_records, @records = pagy(records, page_param: :page_records)
+    @pagy_patients, @patients = pagy(patients, page_param: :patients)
     respond_to do |format|
       format.js
       format.html
     end
   end
+  
+  
 
   # GET /records/1 or /records/1.json
   def show

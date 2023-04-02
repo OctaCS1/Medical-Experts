@@ -10,12 +10,57 @@
           <%= link_to 'Catre lista pacientilor', patients_path, class:'inline-flex items-center justify-center text-red-600 rounded-md border border-transparent bg-white px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-white-300 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:w-auto' %>
         </div>
         <div class="mt-4 sm:mt-0 sm:ml-4 sm:flex-none">
-          <%= link_to 'Adauga fisa Clinica', patients_path, class:'inline-flex items-center justify-center text-red-600 rounded-md border border-transparent bg-white px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-white-300 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:w-auto' %>
+          <button class="inline-flex items-center justify-center text-red-600 rounded-md border border-transparent bg-white px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-white-300 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:w-auto" onclick="openSlideOver()">Adauga fisa Clinica</button>
+          <div class="fixed justify-center z-10 inset-0 hidden pt-32 overflow-auto transition-opacity" 
+              id="slide-over">
+            <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+              <div class="bg-white rounded-lg shadow-xl mx-auto max-w-7xl px-4 pb-2 sm:px-6 lg:px-8 overflow-x-auto"id="slide-overr">
+                <div class="p-4">
+                  <h1 class="text-2xl font-bold mb-4">Adauga fisa Clinica</h1>
+                  <form onsubmit="return false;">
+                    <div class="center pb-2">
+                      <div class="relative rounded-md border border-gray-300 px-3 py-2 shadow-sm focus-within:border-red-600 focus-within:ring-1 focus-within:ring-red-600">
+                        <label for="name" class="absolute -top-2 left-2 -mt-px inline-block text-center bg-white px-1 text-xs font-medium text-gray-900">Cauta</label>
+                        <input onkeypress='search(event, this);' type="text" name="name" id="searchh" class="block w-full border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm" placeholder="Marian Popescu " autofocus>
+                      </div>
+                    </div>
+                      <table id="patients" class="min-w-full divide-y divide-gray-300 overflow-auto">
+                        <thead>
+                          <tr>
+                            <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 md:pl-0">Nume</th>
+                            <th scope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-gray-900">Prenume</th>
+                            <th scope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-gray-900">CNP</th>
+                            <th scope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-gray-900">Varsta</th>
+                            <th scope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-gray-900">Apartine de</th>
+                            <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6 md:pr-0">
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200">
+                          <% @patients.each do |patient| %>
+                            <%= render partial: "records/patient", locals: { patient: patient } %>
+                          <% end %>
+                        </tbody>
+                      </table>
+                  </form>
+                  <div class="flex <% if @pagy_patients.pages > 1 %> justify-between<% else %> justify-end<%end%>">
+                    <% if @pagy_patients.pages > 1 %>
+                      <div class="pt-4 pb-4">
+                        <%== pagy_nav(@pagy_patients) %>
+                      </div>
+                      <%end%>
+                    <div class="mt-4">
+                      <button class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600" onclick="closeSlideOver()">Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </header>
   </div>
-
   <main class="-mt-32">
     <div class="mx-auto max-w-7xl px-4 pb-12 sm:px-6 lg:px-8">
       <div class="rounded-lg bg-white px-5 py-6 shadow sm:px-6">
@@ -48,9 +93,11 @@
                     <%= render @records %>
                   </tbody>
                 </table>
-                <div class="flex justify-center pt-8">
-                  <%== pagy_nav(@pagy) %>
-                </div>
+                  <% if @pagy_records.pages > 1 %>
+                    <div class="flex justify-center pt-8">
+                      <%== pagy_nav(@pagy_records) %>
+                    </div>
+                  <% end %>
               </div>
             </div>
           </div>
@@ -60,6 +107,7 @@
   </main>
 </div>
 <script>
+let isSlideOverOpen = false;
   let timeoutIdSearch;
   function search(event, e){
     clearTimeout(timeoutIdSearch);
@@ -73,5 +121,67 @@
         success: function(data) {}
       });
     }, 250);
+  }
+  function searchh(event, e){
+    clearTimeout(timeoutIdSearch);
+    timeoutIdSearch = setTimeout(() => {
+      $.ajax({
+        url: "/patients",
+        type: "GET",
+        data: {
+          search: e.value
+        },
+        success: function(data) {}
+      });
+    }, 250);
+  }
+window.addEventListener('load', function() {
+  if (localStorage.getItem('slide-over-active') === 'true' && !slideOverOpened) {
+    openSlideOverr();
+  }
+
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.has('patients')) {
+    openSlideOverr();
+  }
+});
+
+function openSlideOver() {
+  document.getElementById('slide-over').classList.remove('hidden');
+  setTimeout(function() {
+  document.getElementById('slide-over').classList.add('slide-over-active');
+  }, 300);
+  document.getElementsByTagName('body')[0].classList.add('slide-over-active');
+  setTimeout(function() {
+    isSlideOverOpen = true
+  }, 1000);
+}
+
+function openSlideOverr() {
+  document.getElementById('slide-over').classList.remove('hidden');
+  document.getElementById('slide-over').classList.add('slide-over-active');
+  document.getElementsByTagName('body')[0].classList.add('slide-over-active');  
+  setTimeout(function() {
+    isSlideOverOpen = true
+  }, 1000);
+}
+
+function closeSlideOver() {
+  document.getElementById('slide-over').classList.remove('slide-over-active');
+  setTimeout(function() {
+    document.getElementById('slide-over').classList.add('hidden');
+  }, 300);
+  document.getElementsByTagName('body')[0].classList.remove('slide-over-active');
+  isSlideOverOpen = false;
+}
+const box = document.querySelector("#slide-overr");
+
+document.addEventListener("click", function(event) {
+  if (isSlideOverOpen && !box.contains(event.target)) {
+    closeSlideOver();
+  }
+});
+  if (window.performance && window.performance.navigation.type === window.performance.navigation.TYPE_RELOAD) {
+    window.location.href = '/records';
   }
 </script>
