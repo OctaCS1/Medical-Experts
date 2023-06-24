@@ -6,14 +6,11 @@
         <h1 class="text-3xl font-bold tracking-tight text-white">Fisele de observatie clinica a pacientilor</h1>
         <div class="sm:flex-auto">
         </div>
-        <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-          <%= link_to 'Catre lista pacientilor', patients_path, class:'inline-flex items-center justify-center text-red-600 rounded-md border border-transparent bg-white px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-white-300 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:w-auto' %>
-        </div>
         <div class="mt-4 sm:mt-0 sm:ml-4 sm:flex-none">
           <button class="inline-flex items-center justify-center text-red-600 rounded-md border border-transparent bg-white px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-white-300 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:w-auto" onclick="openSlideOver()">Adauga fisa Clinica</button>
-          <div class="fixed justify-center z-10 inset-0 hidden pt-32 overflow-auto transition-opacity" 
+          <div class="flex justify-center z-10 inset-0 hidden pt-32 overflow-auto transition-opacity" 
               id="slide-over">
-            <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block overflow-auto sm:p-0">
               <div class="bg-white rounded-lg shadow-xl mx-auto max-w-7xl px-4 pb-2 sm:px-6 lg:px-8 overflow-x-auto"id="slide-overr">
                 <div class="p-4">
                   <h1 class="text-2xl font-bold mb-4">Adauga fisa Clinica</h1>

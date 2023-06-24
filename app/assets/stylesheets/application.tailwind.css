@@ -118,6 +118,6 @@
   opacity: 1;
   visibility: visible;
 }
-body::-webkit-scrollbar{
+main::-webkit-scrollbar{
   display: none;
 }
